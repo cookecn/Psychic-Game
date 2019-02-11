@@ -1,54 +1,57 @@
-window.onload = function() {
-
-    var userChoice = 0;
-    var guesses = 10;
-    var computerGuess = computerGuess;
-    var usedArray = [];
+    var userChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-
     var wins = 0;
     var losses = 0;
-
+    var guessed = [];
+    var guessesLeft = 9;
     var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-    console.log(computerGuess);
+    var computerGuessed = computerGuess;
 
-    function compGuess() {
+    function init () {
         computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-        console.log(computerGuess);
+        guessed = "";
+        guessesLeft = 9;
     }
 
-    document.onkeyup = function(event) {
+    document.onkeyup = function (event) {
         var userGuess = event.key;
+        guessed = event.key;
+        document.getElementById("guessed").append(guessed);
+        
+        wins = 0;
+        losses = 0;
+        guessesLeft-1;
+        document.getElementById('guessesLeft').innerHTML = guessesLeft;
 
         //If then statements go here.
-        if (userChoice === computerGuess) {
-            wins++;
-            guesses = 10;
-            usedArray = [];
+        if (userGuess !== computerGuess) {
+            guessesLeft--;
+            document.getElementById("guessesLeft").innerHTMl = 9;
+        } 
+            
+
+        if (guessesLeft === 0) {
+            losses++;
+            guessesLeft = 9;
+            document.getElementById('losses').innerHTML = losses;
+            document.getElementById('guessed').innerHTML = "";
+            document.getElementById('guessesLeft').innerHTML = 9;
+            init();
+
+            alert("Wrong answers, try again");
         } 
 
-        compGuess();
-        if (userChoice !== computerGuess) {
-            guesses--;
+        else if (userGuess === computerGuess) {
+            wins++;
+            document.getElementById('wins').innerHTML = wins;
+            document.getElementById('guessesLeft').innerHTML = 9;
+            document.getElementById('guessed').innerHTML = "";
+            init();
+
+            alert("Correct! The answer was " + userGuess);
         }
+    };
 
-        if (guesses == 0) {
-            losses++;
-            usedArray = [];
-            guesses = 10;
-        }
-
-        if (usedArray.indexOf(userChoice) >= 0) {
-
-        } else {
-            usedArray.push(userChoice);
-            document.getElementById('userChoice').innerHTML = usedArray;
-            console.log(usedArray);
-        }
-
-        document.getElementById('wins').innerHTML = wins;
-        document.getElementById('losses').innerHTML = losses;
-        document.getElementById('guesses').innerHTML = guesses;
-        document.getElementById('usedArray').innerHTML = usedArray;
+    function restarted () {
+        location.reload()
     }
-}
