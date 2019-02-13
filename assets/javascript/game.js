@@ -5,7 +5,6 @@
     var guessed = [];
     var guessesLeft = 9;
     var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-    var computerGuessed = computerGuess;
 
     function init () {
         computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
@@ -17,28 +16,25 @@
         var userGuess = event.key;
         guessed = event.key;
         document.getElementById("guessed").append(guessed);
-        
         wins = 0;
         losses = 0;
-        guessesLeft-1;
         document.getElementById('guessesLeft').innerHTML = guessesLeft;
+        console.log(computerGuess);
 
         //If then statements go here.
         if (userGuess !== computerGuess) {
             guessesLeft--;
-            document.getElementById("guessesLeft").innerHTMl = 9;
+            document.getElementById("guessesLeft").innerHTMl = guessesLeft;
         } 
             
 
         if (guessesLeft === 0) {
+            alert("Wrong answers, try again");
             losses++;
-            guessesLeft = 9;
             document.getElementById('losses').innerHTML = losses;
             document.getElementById('guessed').innerHTML = "";
             document.getElementById('guessesLeft').innerHTML = 9;
             init();
-
-            alert("Wrong answers, try again");
         } 
 
         else if (userGuess === computerGuess) {
@@ -47,7 +43,6 @@
             document.getElementById('guessesLeft').innerHTML = 9;
             document.getElementById('guessed').innerHTML = "";
             init();
-
             alert("Correct! The answer was " + userGuess);
         }
     };
